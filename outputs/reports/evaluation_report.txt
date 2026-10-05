@@ -1,0 +1,39 @@
+============================================================
+TEST SET SIZE: 3858 reviews
+
+OVERALL METRICS (Positive = the 'positive' class)
+Accuracy : 0.9049
+Precision: 0.9695
+Recall   : 0.9163
+F1-score : 0.9422
+
+NEGATIVE CLASS METRICS (minority class)
+Precision: 0.6477
+Recall   : 0.8423
+F1-score : 0.7323
+
+CONFUSION MATRIX (rows = actual, columns = predicted)
+                 Pred Negative   Pred Positive
+Actual Negative            502              94
+Actual Positive            273            2989
+
+True Positives (TP) : 2989
+True Negatives (TN) : 502
+False Positives (FP): 94
+False Negatives (FN): 273
+
+CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+    Negative     0.6477    0.8423    0.7323       596
+    Positive     0.9695    0.9163    0.9422      3262
+
+    accuracy                         0.9049      3858
+   macro avg     0.8086    0.8793    0.8372      3858
+weighted avg     0.9198    0.9049    0.9097      3858
+
+CLASS BALANCE CHECK (test set)
+Negative: 596 (15.45%)
+Positive: 3262 (84.55%)
+Accuracy of a dummy model that always says 'Positive': 0.8455
+============================================================
