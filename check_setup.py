@@ -1,4 +1,3 @@
-"""Step 1 check: verifies the project structure and required libraries."""
 import importlib
 import os
 import sys
