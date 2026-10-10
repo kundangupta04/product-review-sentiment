@@ -7,12 +7,12 @@ classifier, with a simple Streamlit web demo.
 ---
 
 
-## 1. Problem Statement
+## Problem Statement
 Online stores receive thousands of product reviews. Reading them all by hand is
 slow and impractical. This project builds a system that reads a review and
 automatically labels its sentiment as Positive or Negative.
 
-## 2. Objective
+## Objective
 Build a classical machine learning pipeline that:
 - cleans raw review text,
 - converts it to numbers using TF-IDF,
@@ -20,7 +20,7 @@ Build a classical machine learning pipeline that:
 - evaluates it with Accuracy, Precision, Recall, F1-score and a confusion matrix,
 - predicts the sentiment of a new, user-entered review through a simple web interface.
 
-## 3. Features
+## Features
 - Text cleaning (HTML, URLs, punctuation, case) that **keeps negation words**
 - Handling of missing values and duplicate reviews
 - Exploratory data analysis with saved charts
@@ -33,7 +33,7 @@ Build a classical machine learning pipeline that:
 - Optional comparison with Multinomial Naive Bayes
 - Automated end-to-end test script
 
-## 4. Technology Stack
+## Technology Stack
 | Tool | Used for |
 |---|---|
 | Python | Main language |
@@ -47,7 +47,7 @@ Build a classical machine learning pipeline that:
 NLTK is listed in `requirements.txt` because the project brief allows it, but
 the current code does **not** use it. No deep learning libraries are used.
 
-## 5. Dataset
+## Dataset
 - **Source:** Amazon Fine Food Reviews (Kaggle): https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews
 - **File used:** `Reviews.csv`
 - **Columns used:** `Text` (the review) and `Score` (1 to 5 stars)
@@ -66,7 +66,7 @@ The raw file is not included in this repository. Download it and place it in
 `data/raw/`.
 
 
-## 6. Project Structure
+##  Project Structure
 ```
 product-review-sentiment/
 ├── data/
@@ -99,7 +99,7 @@ product-review-sentiment/
 └── .gitignore
 ```
 
-## 8. Data Preprocessing
+## Data Preprocessing
 The function `clean_text()` in `src/preprocessing.py` does the following:
 
 1. Converts missing or non-text values to an empty string
@@ -119,7 +119,7 @@ reviews that are empty after cleaning, and duplicate reviews are dropped.
 Duplicates are removed so the same review cannot appear in both the training
 and test sets.
 
-## 9. TF-IDF Explanation
+## TF-IDF
 TF-IDF (Term Frequency, Inverse Document Frequency) turns text into numbers.
 A word gets a **high** weight if it appears often in one review but rarely
 across all reviews. A word gets a **low** weight if it is common everywhere.
@@ -136,7 +136,7 @@ fitted only on the training set (`fit_transform`) and only applied to the test
 set (`transform`). The project checks this explicitly: no word that appears
 only in the test data ends up in the vocabulary.
 
-## 10. Logistic Regression Explanation
+## Logistic Regression
 Logistic Regression gives each TF-IDF feature a weight, adds the weighted
 values together, and converts the total into a probability between 0 and 1.
 If the probability of Positive is above 0.5, the review is labeled Positive;
@@ -149,7 +149,7 @@ Settings used (in `src/train.py`):
   during training, which helps with the class imbalance. It uses only the
   training labels.
 
-## 11. Evaluation Metrics
+## Evaluation Metrics
 - **True Positive (TP):** actually Positive, predicted Positive
 - **True Negative (TN):** actually Negative, predicted Negative
 - **False Positive (FP):** actually Negative, predicted Positive
@@ -179,7 +179,7 @@ Settings used (in `src/train.py`):
 All values come from real predictions on the test set. They are saved in
 `outputs/reports/evaluation_report.txt`.
 
-## 12. Confusion Matrix
+## Confusion Matrix
 Rows are the actual label and columns are the predicted label:
 
 | | Predicted Negative | Predicted Positive |
@@ -193,7 +193,7 @@ reviews, but only 65% of the reviews it calls Negative really are Negative.
 It wrongly labels 273 Positive reviews as Negative, which is the trade-off of
 using `class_weight="balanced"`.
 
-## 13. Model Comparison (Optional)
+## Model Comparison
 Multinomial Naive Bayes was trained on the same split and the same TF-IDF
 settings, and measured on the same test set. Run it with
 `python -m src.compare_models`.
@@ -223,7 +223,7 @@ and should not be read as a general ranking of the algorithms.
 
 Logistic Regression remains the primary model of this project.
 
-## 14. Installation
+## Installation
 Requires Python 3.10 or newer.
 
 **Windows (PowerShell):**
@@ -253,7 +253,7 @@ python -m src.evaluate          # metrics and confusion matrix
 
 The trained pipeline is saved to `models/sentiment_pipeline.joblib`.
 
-## 16. How to Run the Streamlit Application
+## Run the Streamlit Application
 ```bash
 python -m streamlit run app.py
 ```
@@ -261,7 +261,7 @@ Then open http://localhost:8501 in your browser, type a review and click
 **Analyze Sentiment**. The model must be trained first (Section 15). The app
 loads the saved pipeline once and never retrains.
 
-## 17. Example Input and Output
+## Input and Output
 Real outputs from `python -m src.test_project`:
 
 | Review | Prediction | Confidence |
@@ -284,7 +284,7 @@ sentiment, confidence = predict_sentiment("The product is excellent and worth th
 print(sentiment, f"{confidence:.2%}")
 ```
 
-## 18. Testing
+## Testing
 | Command | What it checks |
 |---|---|
 | `python check_setup.py` | Libraries import correctly and folders exist |
@@ -297,7 +297,7 @@ The end-to-end test passed all 15 checks, including the data split, the TF-IDF
 leakage check, model training, metrics, saved-model loading, the Streamlit app
 and classification without retraining.
 
-## 19. Project Limitations
+## Project Limitations
 - The **Negative class is the weak spot** (Precision 0.6477), mainly caused by
   class imbalance.
 - The model has only two classes, so **mixed reviews** are forced into one of
@@ -311,21 +311,10 @@ and classification without retraining.
 - Confidence is a model probability, not a guarantee of correctness.
 - Neutral (3-star) reviews were removed, so the model never learned them.
 
-## 20. Future Scope
+## Future Scope
 - Use the full dataset instead of a 20,000-review sample
 - Try cross-validation and hyperparameter tuning
 - Add a Neutral class
 - Test on other product categories
 - Compare with additional classical models
 - Explore other methods only if the course allows them
-
-## 21. Team Member Responsibilities
-| Member | Responsibility |
-|---|---|
-| <<Name 1>> | Project setup, dataset loading |
-| <<Name 2>> | Text cleaning and preprocessing |
-| <<Name 3>> | Exploratory data analysis and visualizations |
-| <<Name 4>> | TF-IDF, model training and evaluation |
-| <<Name 5>> | Prediction function, Streamlit app, testing and documentation |
-
-*(Adjust this split to match who actually did what.)*
